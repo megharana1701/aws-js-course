@@ -1,4 +1,4 @@
-import { Construct } from "constructs";
+import { Construct } from 'constructs';
 import {
   aws_s3,
   aws_cloudfront,
@@ -6,15 +6,15 @@ import {
   aws_s3_deployment,
   CfnOutput,
   RemovalPolicy,
-} from "aws-cdk-lib";
+} from 'aws-cdk-lib';
 
-const path = "./resources/build/dist/app/browser";
+const path = '../dist/app/browser';
 
 export class DeploymentService extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    const hostingBucket = new aws_s3.Bucket(this, "FrontendBucket", {
+    const hostingBucket = new aws_s3.Bucket(this, 'FrontendBucket', {
       blockPublicAccess: aws_s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
@@ -22,7 +22,7 @@ export class DeploymentService extends Construct {
 
     const distribution = new aws_cloudfront.Distribution(
       this,
-      "CloudfrontDistribution",
+      'CloudfrontDistribution',
       {
         defaultBehavior: {
           origin:
@@ -32,34 +32,34 @@ export class DeploymentService extends Construct {
           viewerProtocolPolicy:
             aws_cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         },
-        defaultRootObject: "index.html",
+        defaultRootObject: 'index.html',
         errorResponses: [
           {
             httpStatus: 404,
             responseHttpStatus: 200,
-            responsePagePath: "/index.html",
+            responsePagePath: '/index.html',
           },
         ],
       },
     );
 
-    new aws_s3_deployment.BucketDeployment(this, "BucketDeployment", {
+    new aws_s3_deployment.BucketDeployment(this, 'BucketDeployment', {
       sources: [aws_s3_deployment.Source.asset(path)],
       destinationBucket: hostingBucket,
       distribution,
-      distributionPaths: ["/*"],
+      distributionPaths: ['/*'],
     });
 
-    new CfnOutput(this, "CloudFrontUrl", {
+    new CfnOutput(this, 'CloudFrontUrl', {
       value: distribution.domainName,
-      description: "The distrubution Url",
-      exportName: "CloudFrontUrl",
+      description: 'The distrubution Url',
+      exportName: 'CloudFrontUrl',
     });
 
-    new CfnOutput(this, "BucketName", {
+    new CfnOutput(this, 'BucketName', {
       value: hostingBucket.bucketName,
-      description: "The name of the S3 bucket",
-      exportName: "BucketName",
+      description: 'The name of the S3 bucket',
+      exportName: 'BucketName',
     });
   }
 }
