@@ -45,3 +45,12 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/infra/*.js
+/infra/!jest.config.js
+/infra/*.d.ts
+/infra/node_modules
+
+# CDK asset staging directory
+/infra/.cdk.staging
+/infra/cdk.out
