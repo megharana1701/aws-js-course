@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production",
+    "deploy": "npm run build && cd infra && cdk synth && cdk bootstrap aws://021953068157/ap-south-1 && cdk deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
