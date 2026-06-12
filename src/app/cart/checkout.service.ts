@@ -1,9 +1,17 @@
 import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { CartService } from './cart.service';
 import { ProductsService } from '../products/products.service';
-import { Observable } from 'rxjs';
 import { ProductCheckout } from '../products/product.interface';
-import { map } from 'rxjs/operators';
+
+export type ShippingAddress = {
+  firstName: string;
+  lastName: string;
+  address: string;
+  comment: string;
+};
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +32,11 @@ export class CheckoutService {
         })),
       ),
     );
+  }
+
+  placeOrder(address: ShippingAddress): Observable<unknown> {
+    const url = this.cartService.getCartOrderUrl();
+
+    return this.cartService.placeOrder(url, address);
   }
 }

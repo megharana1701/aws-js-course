@@ -95,4 +95,28 @@ export class CartComponent {
   remove(id: string): void {
     this.cartService.removeItem(id);
   }
+
+  placeOrder(): void {
+    if (this.shippingInfo.invalid) {
+      this.shippingInfo.markAllAsTouched();
+      return;
+    }
+
+    this.checkoutService
+      .placeOrder({
+        firstName: this.shippingInfo.value.firstName,
+        lastName: this.shippingInfo.value.lastName,
+        address: this.shippingInfo.value.address,
+        comment: this.shippingInfo.value.comment,
+      })
+      .subscribe({
+        next: (res) => {
+          console.log('Order placed:', res);
+          this.cartService.empty();
+        },
+        error: (err) => {
+          console.error('Place order failed:', err);
+        },
+      });
+  }
 }

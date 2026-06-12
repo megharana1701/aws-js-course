@@ -11,7 +11,7 @@ export const environment: Config = {
     order: 'https://x9s4cqtlwh.execute-api.ap-south-1.amazonaws.com/prod',
     import: 'https://2ljmlana2m.execute-api.ap-south-1.amazonaws.com/prod',
     bff: 'https://x9s4cqtlwh.execute-api.ap-south-1.amazonaws.com/prod',
-    cart: 'https://x9s4cqtlwh.execute-api.ap-south-1.amazonaws.com/prod',
+    cart: 'https://3c20n7sk11.execute-api.ap-south-1.amazonaws.com/prod',
   },
   apiEndpointsEnabled: {
     product: true,
