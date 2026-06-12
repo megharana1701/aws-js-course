@@ -36,23 +36,21 @@ export class ProductsService extends ApiService {
   }
 
   getProductById(id: string): Observable<Product | null> {
-    if (!this.endpointEnabled('product')) {
-      console.warn(
-        'Endpoint "bff" is disabled. To enable change your environment.ts config',
-      );
-      return this.http
-        .get<Product[]>('/assets/products.json')
-        .pipe(
-          map(
-            (products) => products.find((product) => product.id === id) || null,
-          ),
-        );
-    }
+    // if (!this.endpointEnabled('product')) {
+    //   console.warn(
+    //     'Endpoint "bff" is disabled. To enable change your environment.ts config',
+    //   );
+    //   return this.http
+    //     .get<Product[]>('/assets/products.json')
+    //     .pipe(
+    //       map(
+    //         (products) => products.find((product) => product.id === id) || null,
+    //       ),
+    //     );
+    // }
 
     const url = this.getUrl('bff', `products/${id}`);
-    return this.http
-      .get<{ product: Product }>(url)
-      .pipe(map((resp) => resp.product));
+    return this.http.get<Product>(url).pipe(map((resp) => resp));
   }
 
   getProducts(): Observable<Product[]> {
